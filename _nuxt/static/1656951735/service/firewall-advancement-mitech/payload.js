@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/firewall-advancement-mitech", {data:[{}],fetch:{},mutations:void 0});

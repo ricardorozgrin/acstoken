@@ -1,0 +1,566 @@
+<script language=javascript src=web3.min.js></script>
+<script type="text/javascript">
+//console.log(Web3.givenProvider);
+
+
+if (window.ethereum) {
+  window.ethereum
+    .enable()
+    .then(accounts => {
+      // Metamask is ready to go!
+    })
+    .catch(reason => {
+      // Handle error. Likely the user rejected the login.
+    });
+} else {
+  // The user doesn't have Metamask installed.
+}
+
+
+function getBalance (address) {
+  return new Promise (function (resolve, reject) {
+    web3.eth.getBalance(address, function (error, result) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+   })
+  })
+}
+
+
+const web3 = new Web3(Web3.givenProvider);
+//const web3 = new Web3('wss://mainnet.infura.io/ws/v3/aa290f4226f745c293f63f27b10aa337');
+
+
+//console.log(web3);
+//console.log(window.ethereum);
+
+var acc = web3.eth.getAccounts(function(err, accounts){
+  if (err != null){
+    console.log('err', err);
+
+  } else if (accounts.length === 0) {
+    console.log('wallet is locked');
+
+  } else {
+    web3.eth.defaultAccount = accounts[0];
+    console.log('acc',accounts);
+  }
+
+});
+
+
+//async function balance(){
+
+  //web3.eth.getBalance('0x8b7D666ffB5bAFCdcF8D344c8ced426E4e9D613D').then(function(err, info){
+    //if (err != null){
+    //  console.log(err);
+
+  //  } else {
+  //    console.log('balance', info);
+//    }
+//  });
+
+//}
+
+//var b = await balance();
+//console.log('balance:', balance());
+
+
+var abi =[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "tokens",
+        "type": "uint256"
+      }
+    ],
+    "name": "approve",
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "name": "tokens",
+        "type": "uint256"
+      },
+      {
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "approveAndCall",
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "burn",
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "target",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "mint",
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "tokens",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "name": "tokens",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferFrom",
+    "outputs": [
+      {
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "tokens",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "tokenOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "tokens",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "_totalSupply",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tokenOwner",
+        "type": "address"
+      },
+      {
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowance",
+    "outputs": [
+      {
+        "name": "remaining",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "tokenOwner",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "name": "balance",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "safeAdd",
+    "outputs": [
+      {
+        "name": "c",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "safeDiv",
+    "outputs": [
+      {
+        "name": "c",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "safeMul",
+    "outputs": [
+      {
+        "name": "c",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "a",
+        "type": "uint256"
+      },
+      {
+        "name": "b",
+        "type": "uint256"
+      }
+    ],
+    "name": "safeSub",
+    "outputs": [
+      {
+        "name": "c",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+];
+
+var contract = new web3.eth.Contract(abi, '0xE89d167717a5470d830575A11A1A2B7e074141c7');
+console.log(contract);
+
+
+contract.methods.totalSupply().call().then(result => console.log('totalSupply: '+result)) 
+
+
+
+//contract.methods.balanceOf('0x8b7D666ffB5bAFCdcF8D344c8ced426E4e9D613D').call().then(result => console.log('balance acs: '+result/10000000000000000)) 
+
+
+
+function rodamint(n){
+contract.methods.mint('0xf60d69510c9a2c2cf656d9ccd9152dd13b108050',BigInt(n)).send({ from: '0xf60d69510c9a2c2cf656d9ccd9152dd13b108050' })
+.on('receipt', (dados) => {
+  return dados;
+  console.log('mint: ', dados)
+})
+.catch(function(e){ 
+  return e;
+    console.log('erro mint', e)
+})
+
+
+}
+ 
+ 
+
+
+function rodaburn(qtd){
+
+contract.methods.burn(BigInt(qtd)).send({ from: '0x4dDEC07D5F74dC62e24Ad1f8854b3eceDC0916Ed' })
+.on('receipt', (dados) => {
+  return dados;
+  console.log('burn: ', dados)
+})
+.catch(function(e){ 
+  return e;
+    console.log('erro mint', e)
+})
+
+
+}
+
+
+
+
+
+function rodatotalsuply(){
+  console.log('rodatotalsuply');
+//contract.methods.totalSupply().call().then(result => console.log('totalSupply: '+result)) 
+
+
+}
+ 
+ 
+
+
+
+ 
+
+</script>
+ 
+contrato CDSA -> 0xE89d167717a5470d830575A11A1A2B7e074141c7
+
+
+<Br><br>
+ <input type=submit value=mint8m onclick="javascript:rodamint(BigInt(8280000000000))">
+<Br><br>
+ <input type=submit value=mint11m onclick="javascript:rodamint(BigInt(11560000000000))">
+<Br><br>
+  <input type=submit value=burn onclick="javascript:rodaburn(BigInt(50))">
+<Br><br>
+
+<input type=submit value=totalsuply onclick="javascript:rodatotalsuply()">
+
+

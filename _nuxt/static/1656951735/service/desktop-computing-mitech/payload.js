@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/desktop-computing-mitech", {data:[{}],fetch:{},mutations:void 0});

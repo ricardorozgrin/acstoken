@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/firewall-advance-03", {data:[{}],fetch:{},mutations:void 0});

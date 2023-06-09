@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/data-security-01", {data:[{}],fetch:{},mutations:void 0});

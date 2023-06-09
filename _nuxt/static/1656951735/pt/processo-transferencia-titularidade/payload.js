@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/pt/processo-transferencia-titularidade", {data:[{}],fetch:{},mutations:void 0});

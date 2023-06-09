@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/infrastructure-plan-02", {data:[{}],fetch:{},mutations:void 0});

@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/backup-and-recovery", {data:[{}],fetch:{},mutations:void 0});

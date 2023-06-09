@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/business-reform-three", {data:[{}],fetch:{},mutations:void 0});

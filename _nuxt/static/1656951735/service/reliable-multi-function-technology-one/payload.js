@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/reliable-multi-function-technology-one", {data:[{}],fetch:{},mutations:void 0});

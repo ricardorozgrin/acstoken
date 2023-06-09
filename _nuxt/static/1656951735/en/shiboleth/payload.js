@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/en/shiboleth", {data:[{}],fetch:{},mutations:void 0});

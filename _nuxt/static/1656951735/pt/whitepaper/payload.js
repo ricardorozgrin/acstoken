@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/pt/whitepaper", {data:[{}],fetch:{},mutations:void 0});

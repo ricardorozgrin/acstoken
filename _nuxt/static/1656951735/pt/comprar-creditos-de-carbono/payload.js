@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/pt/comprar-creditos-de-carbono", {data:[{}],fetch:{},mutations:void 0});

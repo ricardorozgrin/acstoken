@@ -1,0 +1,26 @@
+<form action=https://solutionart.com.br/acstoken/post method=post>
+<input type=text name=nome value=ricardo>
+<input type=text name=telefone value=telefone>
+<input type=submit value=ok>
+</form>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+<script>
+
+const element = document.querySelector('#post-request .article-id');
+const content = { title: 'Axios POST Request Example' };
+axios.post('https://solutionart/acstoken/post', content)
+    .then(response => element.innerHTML = response.data.id);
+
+</script>
+
+
+
+
+
+<a href='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'>teste</a>
+

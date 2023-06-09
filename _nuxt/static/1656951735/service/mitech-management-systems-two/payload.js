@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/service/mitech-management-systems-two", {data:[{}],fetch:{},mutations:void 0});
